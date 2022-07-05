@@ -23,9 +23,11 @@ class ApiController extends Controller
         $student->name = $request->name;
         $student->course = $request->course;
         $student->save();
+        $last_insert_id = $student->id;
 
         return response()->json([
-            "message" => "student record created"
+            "message" => "student record created",
+            "id" => $last_insert_id
         ], 201);
     }
 
