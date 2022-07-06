@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Student;
+use App\Models\School;
+
 
 class ApiController extends Controller
 {
@@ -31,11 +35,11 @@ class ApiController extends Controller
         ], 201);
     }
 
-    public function getStudent($id)
+    public function getStudent(Student $student)
     {
         // logic to get a student record goes here
-        if (Student::where('id', $id)->exists()) {
-            $student = Student::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
+        if (Student::where('id', $student->id)->exists()) {
+            $student = Student::where('id', $student->id)->get()->toJson(JSON_PRETTY_PRINT);
             return response($student, 200);
         } else {
             return response()->json([
@@ -78,5 +82,20 @@ class ApiController extends Controller
                 "message" => "Student not found"
             ], 404);
         }
+    }
+
+
+    public function createSchool(Request $request)
+    {
+        // logic to create a student record goes here
+        $school = new School;
+        $school->studentId = $request->studentId;
+        $school->save();
+        $last_insert_id = $school->id;
+
+        return response()->json([
+            "message" => "school record created",
+            "id" => $last_insert_id
+        ], 201);
     }
 }
