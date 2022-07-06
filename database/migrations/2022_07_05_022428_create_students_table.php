@@ -17,6 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('course');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -29,6 +30,10 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('students');
+        Schema::table('テーブル名', function (Blueprint $table) {
+            //下記を追記
+            $table->dropColumn('deleted_at');
+        });
     }
-    
+
 };
