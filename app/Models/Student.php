@@ -11,6 +11,6 @@ class Student extends Model
     use SoftDeletes;
 
     protected $table = "students";
-    protected $fillable = ["name","course"];
+    protected $fillable = ["name","course","school_id"];
 
 }

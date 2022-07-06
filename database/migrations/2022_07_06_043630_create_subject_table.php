@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('school', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('school_id');
-            $table->integer('student_id');
-            $table->softDeletes();
+        Schema::create('subject', function (Blueprint $table) {
+            $table->id();
+            $table->string("subject");
+            $table->integer("student_id");
             $table->timestamps();
         });
     }
@@ -29,10 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('school');
-        Schema::table('school', function (Blueprint $table) {
-            //下記を追記
-            $table->dropColumn('deleted_at');
-        });
+        Schema::dropIfExists('subject');
     }
 };

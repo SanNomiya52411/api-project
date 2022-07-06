@@ -17,6 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('course');
+            $table->integer('school_id');
             $table->softDeletes();
             $table->timestamps();
         });
