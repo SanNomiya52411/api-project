@@ -30,4 +30,5 @@ Route::get('school/{student_id}', 'App\Http\Controllers\ApiController@getSchoolS
 Route::post('school', 'App\Http\Controllers\ApiController@createSchool');
 
 Route::post('subject', 'App\Http\Controllers\ApiController@createSubject');
+Route::put('subject/{subject_id}', 'App\Http\Controllers\ApiController@detachStudentSubject');
 Route::get('subject/{subject}', 'App\Http\Controllers\ApiController@getSubject');

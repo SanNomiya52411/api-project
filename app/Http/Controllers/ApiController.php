@@ -29,6 +29,10 @@ class ApiController extends Controller
         $student->course = $request->course;
         $student->school_id = $request->school_id;
         $student->save();
+
+        //今はID2の科目だけ登録できる状態。
+        //もう一つ値を受け取ってifで分岐させればいろいろ登録させられる？
+        $student->subject()->attach(2);
         $last_insert_id = $student->id;
 
         return response()->json([
@@ -118,11 +122,10 @@ class ApiController extends Controller
 
     public function createSubject(Request $request)
     {
-        
+
         // logic to create a student record goes here
         $subject = new Subject;
         $subject->subject = $request->subject;
-        $subject->student_id = $request->student_id;
         echo $subject;
         $subject->save();
         $last_insert_id = $subject->id;
@@ -136,9 +139,26 @@ class ApiController extends Controller
     public function getSubject($subject)
     {
         // logic to get all students goes here
-        //firstが必須なのだが、そうではなく全件を取得したい
-        $subject = Subject::where('subject',"$subject")->get();
-        //$subject = DB::table('subject')->where('subject',"$subject");
-        return response($subject, 200);
+        $students = Subject::find($subject)->students;
+        return response($students, 200);
+    }
+
+    public function detachStudentSubject($subject_id)
+    {
+        $subject_id = (int) $subject_id;
+
+        if (Subject::where('id', $subject_id)->exists()) {
+            $subject = Subject::find($subject_id);
+            echo $subject;
+            $subject->students()->detach();
+
+            return response()->json([
+                "message" => "records detached"
+            ], 202);
+        } else {
+            return response()->json([
+                "message" => "attach not found"
+            ], 404);
+        }
     }
 }

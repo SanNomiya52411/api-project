@@ -13,4 +13,8 @@ class Student extends Model
     protected $table = "students";
     protected $fillable = ["name","course","school_id"];
 
+    public function subject(){
+        return $this->belongsToMany(Subject::class);
+    }
+
 }
