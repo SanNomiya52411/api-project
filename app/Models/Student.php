@@ -11,6 +11,10 @@ class Student extends Model
     use SoftDeletes;
 
     protected $table = "students";
-    protected $fillable = ["name","course"];
+    protected $fillable = ["name","course","school_id"];
+
+    public function subject(){
+        return $this->belongsToMany(Subject::class);
+    }
 
 }

@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('subject', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('course');
-            $table->integer('school_id');
-            $table->softDeletes();
+            $table->string("subject");
             $table->timestamps();
         });
     }
@@ -30,11 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
-        Schema::table('students', function (Blueprint $table) {
-            //下記を追記
-            $table->dropColumn('deleted_at');
-        });
+        Schema::dropIfExists('subject');
     }
-
 };

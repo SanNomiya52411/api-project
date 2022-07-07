@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('school', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('studentId');
+            $table->integer('school_id');
+            $table->integer('student_id');
             $table->softDeletes();
             $table->timestamps();
         });
