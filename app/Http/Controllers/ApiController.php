@@ -118,10 +118,12 @@ class ApiController extends Controller
 
     public function createSubject(Request $request)
     {
+        
         // logic to create a student record goes here
         $subject = new Subject;
-        $subject ->subject = $request->subject;
+        $subject->subject = $request->subject;
         $subject->student_id = $request->student_id;
+        echo $subject;
         $subject->save();
         $last_insert_id = $subject->id;
 
@@ -135,7 +137,7 @@ class ApiController extends Controller
     {
         // logic to get all students goes here
         //firstが必須なのだが、そうではなく全件を取得したい
-        $subject = Subject::where('subject',"$subject")->first();
+        $subject = Subject::where('subject',"$subject")->get();
         //$subject = DB::table('subject')->where('subject',"$subject");
         return response($subject, 200);
     }
